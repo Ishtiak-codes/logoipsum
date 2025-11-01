@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --primary: 163 38% 9%; /* dark green */
+    --secondary: 33 27% 81%; /* beige */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+  }
+}
+
+.antic-didone-regular {
+  font-family: "Antic Didone", serif;
+  font-weight: 400;
+  font-style: normal;
+}
