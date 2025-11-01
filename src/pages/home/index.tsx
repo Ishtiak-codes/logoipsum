@@ -25,56 +25,73 @@ function shuffleArray<T>(array: T[]) {
 const Home: React.FC = () => {
   const [clickCount, setClickCount] = useState<number>(0);
   const [cards, setCards] = useState<Card[]>(initialCards);
-
+  const [isLocked, setIsLocked] = useState(true);
+  // publications animation here
   useEffect(() => {
     const shuffleInterval = setInterval(() => {
       setCards((prev) => shuffleArray(prev));
     }, 4000);
     return () => clearInterval(shuffleInterval);
   }, []);
-
-  // Update animation stage based on scroll position.
-  const [isLocked, setIsLocked] = useState(false);
-
+  // hero section animation heree
   useEffect(() => {
-    let ticking = false;
-
+    let animationProgress = 0
+    let animationTimeout: NodeJS.Timeout | null = null
+  
+    const updateStage = (deltaY: number) => {
+      animationProgress += deltaY * 0.002
+      animationProgress = Math.max(0, Math.min(1, animationProgress))
+  
+      let stage = 0
+      if (animationProgress >= 0.7) stage = 3
+      else if (animationProgress >= 0.5) stage = 2
+      else if (animationProgress >= 0.15) stage = 1
+      else stage = 0
+  
+      setClickCount(stage)
+  
+      // wait scroll until animation finishing
+      if (stage === 3 && !animationTimeout) {
+        animationTimeout = setTimeout(() => {
+          setIsLocked(false)
+          animationTimeout = null
+        }, 1500)
+      }
+    }
+  
+    const onWheel = (e: WheelEvent) => {
+      if (isLocked) {
+        e.preventDefault()
+        updateStage(e.deltaY)
+      } else {
+        if (window.scrollY === 0 && e.deltaY < 0) setIsLocked(true)
+      }
+    }
+  
     const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        if (!isLocked) {
-          const scrollY = window.scrollY || window.pageYOffset;
-          const vh =
-            window.innerHeight || document.documentElement.clientHeight;
-          // Use first 60% of viewport for animations
-          const progress = Math.min(1, scrollY / (vh * 0.4));
-          // Map progress to stages with earlier triggers: 15%, 35%, 60%
-          let stage = 0;
-          if (progress >= 0.4) {
-            stage = 3;
-            setIsLocked(true); // Lock at stage 3
-          } else if (progress >= 0.35) {
-            stage = 2;
-          } else if (progress >= 0.15) {
-            stage = 1;
-          }
-          setClickCount(stage);
-        }
-        ticking = false;
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    // initialize on mount
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+      if (isLocked) {
+        const scrollTop = window.scrollY
+        updateStage(scrollTop / 10)
+        window.scrollTo(0, 0)
+      }
+    }
+  
+    window.addEventListener("wheel", onWheel, { passive: false })
+    window.addEventListener("scroll", onScroll, { passive: false })
+  
+    return () => {
+      window.removeEventListener("wheel", onWheel)
+      window.removeEventListener("scroll", onScroll)
+      if (animationTimeout) clearTimeout(animationTimeout)
+    }
+  }, [isLocked])
+  
+  
 
   return (
     <div className="bg-[#E0D1BE] overflow-hidden">
       <Navigation />
-      <section className="pt-32 pb-20 px-6 relative min-h-screen">
+      <section className="pt-20 pb-20 px-6 relative min-h-screen">
         <div className="max-w-7xl mx-auto">
           <Hero clickCount={clickCount} />
         </div>
@@ -83,8 +100,8 @@ const Home: React.FC = () => {
       <section
         className={
           clickCount === 3
-            ? "mt-20 max-w-[1215px] mx-auto"
-            : "mt-72 max-w-[1215px] mx-auto"
+            ? "mt-20 max-w-[1200px] mx-auto"
+            : "mt-72 max-w-[1200px] mx-auto"
         }
       >
         <h2 className="text-[4rem] antic-didone-regular w-[70%] uppercase leading-[4rem] mb-14">

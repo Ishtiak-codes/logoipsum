@@ -10,9 +10,9 @@ type Props = {
 
 const Hero: React.FC<Props> = ({ clickCount }) => {
   return (
-    <>
+    <div className="relative max-w-[1200px] mx-auto min-h-screen flex items-center justify-center">
       <motion.h2
-        className="absolute text-[5rem] uppercase leading-[5rem] z-50 pointer-events-none top-64 left-72 antic-didone-regular"
+        className="absolute text-[5rem] uppercase leading-[5rem] z-50 pointer-events-none top-64 left-28 antic-didone-regular tracking-tighter"
         animate={animationVariants.text[clickCount]}
         transition={{ duration: 0.8, ease: "easeOut" }}
         style={{ willChange: "transform, color" }}
@@ -24,7 +24,7 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
 
       <motion.img
         src={image1}
-        className="absolute right-72 z-20"
+        className="absolute right-60 z-20"
         alt="Main product showcase"
         animate={animationVariants.image1[clickCount]}
         transition={{ duration: 2, ease: "easeInOut" }}
@@ -47,7 +47,7 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
 
       <motion.img
         src={image2}
-        className="absolute right-[600px] top-[500px] z-10"
+        className="absolute right-[500px] top-[500px] z-10"
         alt="Interior design showcase"
         animate={animationVariants.image2[clickCount]}
         transition={{ duration: 2, ease: "easeInOut" }}
@@ -56,7 +56,7 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
 
       <motion.img
         src={image3}
-        className="absolute right-28 top-[600px] z-20"
+        className="absolute right-16 top-[600px] z-20"
         alt="Furniture detail"
         animate={animationVariants.image3[clickCount]}
         transition={{ duration: 2, ease: "easeInOut" }}
@@ -64,7 +64,7 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
       />
 
       <motion.div
-        className="absolute right-14 top-80 z-50"
+        className="absolute right-0 top-80 z-50"
         animate={animationVariants.logo[clickCount]}
         transition={{ duration: 2, ease: "easeInOut" }}
         style={{ willChange: "transform" }}
@@ -74,7 +74,7 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
           <img src={image5} alt="object" className="animate-spin" style={{ animationDuration: "10s" }} />
         </div>
       </motion.div>
-    </>
+    </div>
   )
 }
 
