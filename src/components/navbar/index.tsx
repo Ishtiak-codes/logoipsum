@@ -1,7 +1,7 @@
-import { useState, FC } from 'react';
-import { ChevronDown, Menu } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Logo from '@/assets/images/Logo.png';
+import { useState, FC } from "react";
+import { ChevronDown, Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import Logo from "@/assets/images/Logo.png";
 
 const Navigation: FC = () => {
   const [servicesOpen, setServicesOpen] = useState<boolean>(false);
@@ -9,11 +9,10 @@ const Navigation: FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[999] bg-[#E0D1BE] px-6 py-4 shadow-md">
+    <nav className="fixed top-0 left-0 right-0 z-[999] bg-[#E0D1BE]/30 backdrop-blur-md px-6 py-4">
       <div className="max-w-[1200px] mx-auto flex items-center justify-between">
         <img src={Logo} alt="Logo" className="h-12 w-auto" />
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-2">
           <motion.button
             whileHover={{ scale: 1.02 }}
@@ -23,7 +22,6 @@ const Navigation: FC = () => {
             HOME
           </motion.button>
 
-          {/* SERVICES Dropdown */}
           <div className="relative">
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -52,22 +50,23 @@ const Navigation: FC = () => {
                   transition={{ duration: 0.2 }}
                   className="absolute top-full mt-2 left-0 min-w-[200px] bg-[#122620] rounded-lg shadow-lg overflow-hidden z-50"
                 >
-                  {['Web Design', 'Development', 'Consulting', 'Marketing'].map((item) => (
-                    <motion.a
-                      key={item}
-                      whileHover={{ backgroundColor: '#F5F1EC' }}
-                      href="#"
-                      className="block px-6 py-3 text-white hover:text-white transition-colors"
-                    >
-                      {item}
-                    </motion.a>
-                  ))}
+                  {["Web Design", "Development", "Consulting", "Marketing"].map(
+                    (item) => (
+                      <motion.a
+                        key={item}
+                        whileHover={{ backgroundColor: "#F5F1EC" }}
+                        href="#"
+                        className="block px-6 py-3 text-white hover:text-white transition-colors"
+                      >
+                        {item}
+                      </motion.a>
+                    )
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* MORE Dropdown */}
           <div className="relative">
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -96,10 +95,10 @@ const Navigation: FC = () => {
                   transition={{ duration: 0.2 }}
                   className="absolute top-full mt-2 left-0 min-w-[200px] bg-[#122620] rounded-lg shadow-lg overflow-hidden z-50"
                 >
-                  {['About Us', 'Portfolio', 'Careers', 'Blog'].map((item) => (
+                  {["About Us", "Portfolio", "Careers", "Blog"].map((item) => (
                     <motion.a
                       key={item}
-                      whileHover={{ backgroundColor: '#F5F1EC' }}
+                      whileHover={{ backgroundColor: "#F5F1EC" }}
                       href="#"
                       className="block px-6 py-3 text-white hover:text-white transition-colors"
                     >
@@ -112,7 +111,6 @@ const Navigation: FC = () => {
           </div>
         </div>
 
-        {/* Contact & Mobile Menu */}
         <div className="flex items-center gap-4">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -122,7 +120,6 @@ const Navigation: FC = () => {
             CONTACT US
           </motion.button>
 
-          {/* Mobile Menu Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -145,18 +142,20 @@ const Navigation: FC = () => {
                   transition={{ duration: 0.2 }}
                   className="absolute top-full right-0 mt-2 min-w-[180px] bg-[#122620] rounded-lg shadow-lg overflow-hidden z-50"
                 >
-                  {['Settings', 'Profile', 'Support', 'Logout'].map((item, index) => (
-                    <motion.a
-                      key={item}
-                      whileHover={{ backgroundColor: '#F5F1EC', x: 4 }}
-                      href="#"
-                      className={`block px-6 py-3 text-white hover:text-white transition-colors ${
-                        index === 3 ? 'border-t border-[#E8DFD3]' : ''
-                      }`}
-                    >
-                      {item}
-                    </motion.a>
-                  ))}
+                  {["Settings", "Profile", "Support", "Logout"].map(
+                    (item, index) => (
+                      <motion.a
+                        key={item}
+                        whileHover={{ backgroundColor: "#F5F1EC", x: 4 }}
+                        href="#"
+                        className={`block px-6 py-3 text-white hover:text-white transition-colors ${
+                          index === 3 ? "border-t border-[#E8DFD3]" : ""
+                        }`}
+                      >
+                        {item}
+                      </motion.a>
+                    )
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

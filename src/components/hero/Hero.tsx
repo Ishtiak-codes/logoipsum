@@ -12,7 +12,7 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
   return (
     <div className="relative max-w-[1200px] mx-auto min-h-screen flex items-center justify-center">
       <motion.h2
-        className="absolute text-[4.8rem] uppercase leading-[5rem] z-50 pointer-events-none top-64 left-32 antic-didone-regular tracking-tighter"
+        className="absolute text-[4.8rem] uppercase leading-[5rem] z-50 pointer-events-none top-64 lg:left-32 antic-didone-regular tracking-tighter"
         animate={animationVariants.text[clickCount]}
         transition={{ duration: 0.8, ease: "easeOut" }}
         style={{ willChange: "transform, color" }}
@@ -43,47 +43,50 @@ const Hero: React.FC<Props> = ({ clickCount }) => {
               ? "brightness(0.5)"
               : animationVariants.image1[clickCount].filter,
         }}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ willChange: "transform, width, height, filter" }}
       />
 
-      <motion.div
-        className="absolute inset-x-0 bottom-16 z-50 text-center flex flex-col items-center justify-center pointer-events-none"
-        animate={animationVariants.bottomSection[clickCount]}
-        transition={{ duration: 1, ease: "easeInOut", delay: 0.3 }}
-        style={{ willChange: "opacity, transform" }}
-      >
-        <p className="mb-8 text-gray-300">
-          OUR SET OF EXPERIENCES IS BASED ON TRUST, SELL AND <br /> A COMMITMENT
-          TO GREATNESS
-        </p>
-        <button className="flex items-center justify-between w-60 px-4 py-3 bg-[#122620] rounded-full text-white pointer-events-auto">
-          Explore Our Services <ArrowUpRight />
-        </button>
-      </motion.div>
+      {clickCount === 3 && (
+        <motion.div
+          className="absolute inset-x-0 bottom-[25%] z-50 text-center flex flex-col items-center justify-center pointer-events-none"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
+          style={{ willChange: "opacity, transform" }}
+        >
+          <p className="mb-8 text-gray-300">
+            OUR SET OF EXPERIENCES IS BASED ON TRUST, SELL AND <br /> A
+            COMMITMENT TO GREATNESS
+          </p>
+          <button className="flex items-center justify-between w-60 px-4 py-3 bg-[#122620] rounded-full text-white pointer-events-auto">
+            Explore Our Services <ArrowUpRight />
+          </button>
+        </motion.div>
+      )}
 
       <motion.img
         src={image2}
         className="absolute right-[500px] top-[500px] z-10"
         alt="Interior design showcase"
         animate={animationVariants.image2[clickCount]}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ willChange: "transform, opacity" }}
       />
 
       <motion.img
         src={image3}
-        className="absolute right-16 top-[600px] z-20"
+        className="absolute right-12 top-[650px] z-20"
         alt="Furniture detail"
         animate={animationVariants.image3[clickCount]}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ willChange: "transform, opacity" }}
       />
 
       <motion.div
         className="absolute right-0 top-80 z-50"
         animate={animationVariants.logo[clickCount]}
-        transition={{ duration: 2, ease: "easeInOut" }}
+        transition={{ duration: 2, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ willChange: "transform" }}
       >
         <div className="relative z-50">

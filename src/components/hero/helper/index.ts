@@ -2,8 +2,8 @@
   export const animationVariants = {
       image1: [
         { scale: 1, x: 0, y: 0, width: "auto", height: "auto", filter: "brightness(1)" },
-        { scale: 1.15, x: -150, y: 40, filter: "brightness(1)" },
-        { scale: 1.5, x: -150, y: 40, filter: "brightness(1)" },
+        { scale: 1.2, x: -150, y: -20, filter: "brightness(1)" },
+        { scale: 1.6, x: -150, y: -20, filter: "brightness(1)" },
         {
           scale: 1,
           x: 0,

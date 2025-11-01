@@ -109,7 +109,7 @@ const Home: React.FC = () => {
   return (
     <div className="bg-[#E0D1BE] overflow-hidden">
       <Navigation />
-      <section className="pt-20 pb-20 px-6 relative min-h-screen">
+      <section className="pt-14 pb-20 px-6 relative min-h-screen">
         <div className="max-w-7xl mx-auto">
           <Hero clickCount={clickCount} />
         </div>
