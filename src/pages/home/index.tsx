@@ -35,53 +35,71 @@ const Home: React.FC = () => {
   }, []);
   // hero section animation heree
   useEffect(() => {
-    let animationProgress = 0
+    let scrollAccumulator = 0
+    let isScrolling = false
+    let scrollTimeout: NodeJS.Timeout | null = null
     let animationTimeout: NodeJS.Timeout | null = null
+    const SCROLL_THRESHOLD = 100
   
-    const updateStage = (deltaY: number) => {
-      animationProgress += deltaY * 0.002
-      animationProgress = Math.max(0, Math.min(1, animationProgress))
+    const changeStage = (direction: "up" | "down") => {
+      setClickCount((prev) => {
+        let nextStage = prev
+        if (direction === "down") nextStage = Math.min(prev + 1, 3)
+        else nextStage = Math.max(prev - 1, 0)
   
-      let stage = 0
-      if (animationProgress >= 0.7) stage = 3
-      else if (animationProgress >= 0.5) stage = 2
-      else if (animationProgress >= 0.15) stage = 1
-      else stage = 0
+        // Unlock scrolling if we reach last stage
+        if (nextStage === 3 && isLocked) {
+          animationTimeout = setTimeout(() => {
+            setIsLocked(false)
+            animationTimeout = null
+          }, 1500)
+        }
   
-      setClickCount(stage)
+        // Lock again if scrolling back to first stage
+        if (nextStage < 3 && !isLocked) {
+          setIsLocked(true)
+        }
   
-      // wait scroll until animation finishing
-      if (stage === 3 && !animationTimeout) {
-        animationTimeout = setTimeout(() => {
-          setIsLocked(false)
-          animationTimeout = null
-        }, 1500)
-      }
+        return nextStage
+      })
     }
   
     const onWheel = (e: WheelEvent) => {
-      if (isLocked) {
+      if (!isLocked && e.deltaY < 0 && window.scrollY <= 10) {
         e.preventDefault()
-        updateStage(e.deltaY)
-      } else {
-        if (window.scrollY === 0 && e.deltaY < 0) setIsLocked(true)
+        changeStage("up")
+        return
       }
-    }
+      
+      if (!isLocked) return
+      
+      e.preventDefault()
   
-    const onScroll = () => {
-      if (isLocked) {
-        const scrollTop = window.scrollY
-        updateStage(scrollTop / 10)
-        window.scrollTo(0, 0)
+      if (!isScrolling) {
+        isScrolling = true
+        scrollAccumulator = 0
       }
+  
+      scrollAccumulator += Math.abs(e.deltaY)
+  
+      if (scrollTimeout) clearTimeout(scrollTimeout)
+  
+      scrollTimeout = setTimeout(() => {
+        if (scrollAccumulator >= SCROLL_THRESHOLD) {
+          if (e.deltaY > 0) changeStage("down")
+          else changeStage("up")
+        }
+        isScrolling = false
+        scrollAccumulator = 0
+        scrollTimeout = null
+      }, 150)
     }
   
     window.addEventListener("wheel", onWheel, { passive: false })
-    window.addEventListener("scroll", onScroll, { passive: false })
   
     return () => {
       window.removeEventListener("wheel", onWheel)
-      window.removeEventListener("scroll", onScroll)
+      if (scrollTimeout) clearTimeout(scrollTimeout)
       if (animationTimeout) clearTimeout(animationTimeout)
     }
   }, [isLocked])
